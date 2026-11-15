@@ -1,0 +1,33 @@
+name: Render Graphify
+on:
+  push:
+    branches: [main]
+    paths: ['production/graphify/**', '.github/workflows/render-graphify.yml']
+permissions:
+  contents: write
+concurrency:
+  group: render-graphify
+  cancel-in-progress: false
+jobs:
+  render:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install renderer
+        working-directory: production/graphify
+        run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Export reel and cover
+        working-directory: production/graphify
+        run: |
+          mkdir -p ../../reels
+          npx remotion render index.ts MacNews ../../reels/2026-11-16_graphify.mp4 --gl=swangle --concurrency=2 --crf=22
+          npx remotion still index.ts MacNews ../../reels/2026-11-16_graphify.png --frame=35 --gl=swangle
+      - name: Save approved media
+        run: |
+          git config user.name newai-bot
+          git config user.email bot@users.noreply.github.com
+          git add reels/2026-11-16_graphify.mp4 reels/2026-11-16_graphify.png
+          git diff --cached --quiet || (git commit -m "media: Graphify November 16" && git pull --rebase -q && git push)
