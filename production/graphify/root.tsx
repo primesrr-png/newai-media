@@ -1,5 +1,5 @@
 import React from 'react';
-import {AbsoluteFill, Composition, interpolate, spring, useCurrentFrame, useVideoConfig} from 'remotion';
+import {AbsoluteFill, Audio, staticFile, Composition, interpolate, spring, useCurrentFrame, useVideoConfig} from 'remotion';
 
 const lime = '#d6ff46';
 const scenes = [
@@ -19,7 +19,7 @@ const MacNews: React.FC = () => {
   const enter = spring({frame:local,fps,config:{damping:22,stiffness:130}});
   const opacity = interpolate(local,[0,8,142,149],[0,1,1,.3],{extrapolateLeft:'clamp',extrapolateRight:'clamp'});
   return <AbsoluteFill style={{background:'#101413',color:'#f8faf0',fontFamily:'Arial, sans-serif',padding:'140px 66px',overflow:'hidden'}}>
-    <div style={{position:'absolute',width:800,height:800,borderRadius:'50%',background:'#b2d832',filter:'blur(230px)',opacity:.12,left:280,top:480}}/>
+    <Audio src={staticFile('bed.wav')} volume={0.7}/><div style={{position:'absolute',width:800,height:800,borderRadius:'50%',background:'#b2d832',filter:'blur(230px)',opacity:.12,left:280,top:480}}/>
     <div style={{display:'flex',justifyContent:'space-between',fontSize:25,letterSpacing:4,color:'#a3aa9f'}}><b style={{color:lime}}>NEW AI</b><span>НАХОДКИ · ИНСТРУМЕНТЫ</span></div>
     <div style={{opacity,transform:`translateY(${(1-enter)*35}px)`}}>
       <div style={{fontSize:23,letterSpacing:3,color:'#9fa993',marginTop:95,marginBottom:25}}>{s.eyebrow}</div>
