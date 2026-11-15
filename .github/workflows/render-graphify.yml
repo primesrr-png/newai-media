@@ -22,6 +22,7 @@ jobs:
       - name: Export reel and cover
         working-directory: production/graphify
         run: |
+          python3 music.py
           mkdir -p ../../reels
           npx remotion render index.ts MacNews ../../reels/2026-11-16_graphify.mp4 --gl=swangle --concurrency=2 --crf=22
           npx remotion still index.ts MacNews ../../reels/2026-11-16_graphify.png --frame=35 --gl=swangle
