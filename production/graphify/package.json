@@ -1,0 +1,15 @@
+{
+  "name": "newai-motion",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "render": "remotion render src/index.ts MacNews out/mac-news.mp4 --gl=swangle --concurrency=2",
+    "still": "remotion still src/index.ts MacNews out/preview.png --frame=30 --gl=swangle"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.543",
+    "remotion": "4.0.543",
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
+  }
+}
